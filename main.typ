@@ -441,9 +441,56 @@
     ```
   ]
 ][
-  #set align(center + horizon)
+  #set align(right + horizon)
   #show: rect.with(stroke: .5pt)
   #image("examples/conference.png")
 ]
 
 
+== 制作简历模板
+
+#slide(composer: utils.side-by-side.with(columns: (1fr, auto), gutter: 1em))[
+  - Word / HTML 简历模板？#pause
+    - *不够美观*
+
+  - #LaTeX 简历模板？#pause
+    - *环境配置复杂*
+    - *自主定制困难*
+  
+  - #Typst 简历模板？#pause
+    - *绝对优势领域*
+    - *Chinese-Resume-in-Typst* #linkto("https://github.com/OrangeX4/Chinese-Resume-in-Typst")
+][
+  #set align(center + horizon)
+  #show: rect.with(stroke: .5pt)
+  #image("images/resume.png")
+]
+
+#slide(composer: utils.side-by-side.with(columns: (1fr, auto), gutter: 1em))[
+  #set text(.5em)
+  #show: columns.with(2)
+
+  #raw(lang: "typ", block: true, read("examples/chicv.typ"))
+
+  #set text(1.5em)
+  来源：chicv #linkto("https://github.com/skyzh/chicv")
+][
+  #set align(center + horizon)
+  #show: rect.with(stroke: .5pt)
+  #image("examples/chicv.png")
+]
+
+
+== 南京大学学位论文
+
+#slide(composer: utils.side-by-side.with(columns: (1fr, auto), gutter: 1em))[
+  - *nju-thesis-typst* #linkto("https://github.com/nju-lug/nju-thesis-typst")
+    - 总共开发时间：*一周*
+    - 语法简洁、编译迅速
+    - 通过*「闭包」*封装保存全局配置
+  - `#abstract(keywords: ("我", "就是", "测试用", "关键词"))[中文摘要]`
+][
+  #set align(center + horizon)
+  #show: rect.with(stroke: .5pt)
+  #image("images/nju-thesis.png")
+]
