@@ -28,8 +28,6 @@
 #let (init, slides, touying-outline, alert) = utils.methods(s)
 #show: init
 
-#import "@preview/tiaoma:0.1.0"
-
 // global styles
 #set text(font: ("IBM Plex Serif", "Source Han Serif SC"), lang: "zh", region: "cn")
 #set text(weight: "medium")
