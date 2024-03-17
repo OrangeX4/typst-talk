@@ -1,7 +1,3 @@
-# 并不复杂的 Typst 讲座
-
-> Typst is Simple
-
 <p align="center">
   <img src="images/typst-talk.png" alt="typst-talk" width=75%>
 </p>
