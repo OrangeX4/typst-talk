@@ -7,6 +7,11 @@
   footer-a: self => self.info.subtitle,
   footer-c: self => h(1fr) + utils.info-date(self) + h(1fr) + states.slide-counter.display(int-to-cn-ancient-num) + h(1fr)
 )
+// 加入空页
+#(s.methods.empty-slide = (self: none, ..args) => {
+  self = utils.empty-page(self)
+  (s.methods.slide)(self: self, ..args)
+})
 #let s = (s.methods.info)(
   self: s,
   title: [并不复杂的 Typst 讲座],
@@ -23,6 +28,8 @@
 #let (init, slides, touying-outline, alert) = utils.methods(s)
 #show: init
 
+#import "@preview/tiaoma:0.1.0"
+
 // global styles
 #set text(font: ("IBM Plex Serif", "Source Han Serif SC"), lang: "zh", region: "cn")
 #set text(weight: "medium")
@@ -38,9 +45,8 @@
 #show raw.where(block: true): set par(justify: false)
 #show strong: alert
 
-#let (slide, title-slide, focus-slide) = utils.slides(s)
+#let (slide, empty-slide, title-slide, focus-slide) = utils.slides(s)
 #show: slides
-
 
 = 介绍
 
@@ -55,6 +61,13 @@
 - *运行环境：*Web Wasm / CLI / LSP Language Server
 
 - *编辑器：*Web App #linkto("https://typst.app/") / VS Code / Neovim / Emacs
+
+
+#empty-slide[
+  #set align(center + horizon)
+  #image("images/typst-introduction.png")
+  #place(top + right, dx: -.5em, dy: .5em)[#linkto(icon: "mark-github", "https://github.com/typst/typst")]
+]
 
 
 == Typst 速览
@@ -303,6 +316,25 @@
     - 化简为 `#show heading.where(level: 1): set align(center)`
 
 
+== 数学公式
+
+- `$x$` 是行内公式，`$ x^2 + y^2 = 1 $ <circle>` 是行间公式。
+
+- 与 #LaTeX 的差异：
+  - `(x + 1) / x >= 1 => 1/x >= 0`
+  - #raw(lang: "latex", `\frac{x + 1}{x} \ge 1 \Rightarrow \frac{1}{x} \ge 0`.text)
+
+- *报告，我想用 LaTeX 语法：*#linkto("https://github.com/mitex-rs/mitex")
+
+```typ
+#import "@preview/mitex:0.2.2": *
+
+Write inline equations like #mi("x") or #mi[y].
+#mitex(`
+  \frac{x + 1}{x} \ge 1 \Rightarrow \frac{1}{x} \ge 0
+`)
+```
+
 = 制作模板
 
 == 制作论文模板
@@ -488,9 +520,302 @@
     - 总共开发时间：*一周*
     - 语法简洁、编译迅速
     - 通过*「闭包」*封装保存全局配置
-  - `#abstract(keywords: ("我", "就是", "测试用", "关键词"))[中文摘要]`
+    - *本科生模板 + 研究生模板*
+
+  #set text(.65em)
+  #show: columns.with(3)
+  #show raw.where(block: true): block.with(width: 100%, fill: luma(240), outset: .5em, radius: .2em)
+
+  ```typ
+  // 文稿设置
+  #show: doc
+  // 封面页
+  #cover()
+  // 声明页
+  #decl-page()
+  // 前言
+  #show: preface
+  // 中文摘要
+  #abstract(
+    keywords: ("我", "就是", "测试用", "关键词")
+  )[
+    中文摘要
+  ]
+  // 目录
+  #outline-page()
+  // 插图目录
+  #list-of-figures()
+  // 表格目录
+  #list-of-tables()
+  // 正文
+  #show: mainmatter
+
+  = 基本功能
+
+  == 脚注
+
+  我们可以添加一个脚注。#footnote[脚注内容]
+  ```
 ][
   #set align(center + horizon)
   #show: rect.with(stroke: .5pt)
   #image("images/nju-thesis.png")
+]
+
+
+= 制作 Slides
+
+== Touying
+
+- #Touying 是为 Typst 开发的 Slides 包，类似于 #LaTeX 的 Beamer。
+  - 取自中文「*投影*」，而 Beamer 是德语「*投影仪*」的意思。#linkto("https://touying-typ.github.io/touying/zh/")
+
+- *基本框架：*
+  - 全局单例对象 `s` 保存标题、作者和日期等信息。
+  - 使用 `= 节`、`== 小节` 和 `=== 标题` 划分 Slides 结构。
+  - 使用 `#slide[..]` 块来实现更优雅且精细的控制。
+
+- *使用主题：*`#let s = themes.university.register()`
+
+- *动画：*
+  - `#pause` 和 `#meanwhile` 标记。
+  - `#only("2-")[]`、`#uncover("2-")[]` 和 `#alternatives[][]`。
+
+
+#slide(composer: utils.side-by-side.with(columns: (1fr, auto), gutter: 1em))[
+  #set text(.5em)
+  #show: columns.with(2, gutter: 3em)
+
+  ```typ
+  #import "@preview/touying:0.3.2": *
+
+  #let s = themes.aqua.register(aspect-ratio: "16-9", lang: "en")
+  #let s = (s.methods.info)(
+    self: s,
+    title: [Title],
+    subtitle: [Subtitle],
+    author: [Authors],
+    date: datetime.today(),
+    institution: [Institution],
+  )
+  #let (init, slides, touying-outline, alert) = utils.methods(s)
+  #show: init
+
+  #show strong: alert
+
+  #let (slide, title-slide, outline-slide, focus-slide) = utils.slides(s)
+  #show: slides
+
+  = The Section
+
+  == Slide Title
+
+  #slide[
+    #lorem(40)
+  ]
+
+  #focus-slide[
+    Another variant with primary color in background...
+  ]
+
+  == Summary
+
+  #align(center + horizon)[
+    #set text(size: 3em, weight: "bold", s.colors.primary)
+    THANKS FOR ALL
+  ]
+  ```
+
+  #set text(1.2em)
+
+  来源：Touying 文档 #linkto("https://touying-typ.github.io/touying/zh/docs/themes/aqua")
+][
+  #set align(center + horizon)
+  #show: pad.with(right: -1.5em)
+  #image(height: 90%, "examples/touying.png")
+]
+
+
+== Pinit
+
+- *Pinit* 包提供基于*「图钉」（pin）*进行相对定位的能力。
+
+- 可以方便地实现*「箭头指示」*与*「解释说明」*的效果。
+
+- *一个简单示例：*
+
+#grid(columns: 2, gutter: 1em)[
+  #set text(.85em)
+  #show raw.where(block: true): block.with(width: 100%, fill: luma(240), outset: .7em, radius: .2em)
+
+  ```typ
+  #import "@preview/pinit:0.1.3": *
+  #set text(size: 24pt)
+
+  A simple #pin(1)highlighted text#pin(2).
+
+  #pinit-highlight(1, 2)
+
+  #pinit-point-from(2)[It is simple.]
+  ```
+][
+  #show: align.with(center + horizon)
+  #show: block.with(breakable: false)
+  #v(-2em)
+  #image("images/pinit-1.png")
+  #image("images/pinit-2.png")
+]
+
+#slide[
+  #set align(center + horizon)
+  #image(height: 115%, "images/pinit-3.png")
+  #set text(.8em)
+  #place(top + left, dy: -.5em)[使用 #Typst 和 *Pinit* 复刻算法课的 Slides，样式来源于 #linkto("https://chaodong.me/")]
+  #place(top + right, dx: 1.5em, dy: -.5em)[*示例代码* #linkto(icon: "mark-github", "https://touying-typ.github.io/touying/zh/docs/integration/pinit")]
+]
+
+
+== Touying 对比其他 Slides 方案
+
+#slide[
+  #set text(.7em)
+  #let 难 = text(fill: rgb("#aa0000"), weight: "bold", "难")
+  #let 易 = text(fill: rgb("#007700"), weight: "bold", "易")
+  #let 慢 = text(fill: rgb("#aa0000"), weight: "bold", "慢")
+  #let 快 = text(fill: rgb("#007700"), weight: "bold", "快")
+  #let 弱 = text(fill: rgb("#aa0000"), weight: "bold", "弱")
+  #let 强 = text(fill: rgb("#007700"), weight: "bold", "强")
+  #let 中 = text(fill: blue, weight: "bold", "中等")
+  #let cell(top, bottom) = stack(spacing: .2em, top, block(height: 2em, text(size: .7em, bottom)))
+
+  #v(1em)
+  #figure(table(
+    columns: 8,
+    stroke: none,
+    align: center + horizon,
+    inset: .5em,
+    table.hline(stroke: 2pt),
+    [方案], [语法难度], [编译速度], [排版能力], [模板能力], [编程能力], [动画效果], [代码公式],
+    table.hline(stroke: 1pt),
+    [*PowerPoint*], cell[#易][所见即所得], cell[#快][实时编辑], cell[#强][大公司开发\ 通用软件], cell[#强][模板数量最多\ 容易制作模板], cell[#弱][编程能力极弱\ 难以显示进度], cell[#强][动画效果多\ 但用起来复杂], cell[#难][难以插入代码和公式 #strike[贴图片]],
+    [Beamer], cell[#难][语法繁琐 + 嵌套多 + 难调试], cell[#慢][宏语言编译\ 速度极慢], cell[#弱][使用模板后\ 排版难以修改], cell[#中][拥有较多模板\ 开发模板较难], cell[#中][图灵完备\ 但只是宏语言], cell[#中][简单动画方便\ 无过渡动画], cell[#易][基本默认支持],
+    [#Markdown], cell[#易][入门语法十分简单], cell[#快][语法简单\ 编译速度较快], cell[#弱][语法限制\ 排版能力弱], cell[#弱][难以制作模板\ 只有内置模板], cell[#弱][图灵不完备\ 需要外部脚本], cell[#中][动画效果全看提供了什么], cell[#易][基本默认支持],
+    [#Touying], cell[#易][语法简单\ 使用方便], cell[#快][增量编译渲染\ 速度最快], cell[#中][满足日常学术\ Slides 需求], cell[#强][制作和使用\ 模板都较简单], cell[#强][图灵完备\ 现代编程语言], cell[#中][简单动画方便\ 无过渡动画], cell[#易][默认支持\ MiTeX 包],
+    table.hline(stroke: 2pt),
+  ))
+]
+
+
+== 一些常见的 Slides 问题
+
+- *能不能插入 LaTeX 公式？*
+  - 可以，只需要使用 MiTeX 包。#linkto("https://github.com/mitex-rs/mitex")
+
+- *能不能够加入 GIF 动图或者视频？*
+  - GIF 动图可以，但是要使用 *Typst Preview* 插件的 Slide 模式。
+    - 这是因为 *Typst Preview* 插件是*基于 SVG* 的。
+
+- *插入图片方便吗？*
+  - 方便，比如本讲座的 Slides 就有一堆图片。
+    - 你可以使用 *grid 布局*。
+    - 也可以使用 *Pinit* 包的 *「图钉」* 功能。
+
+
+= 包管理
+
+== Typst 包管理
+
+- #Typst 已经有了一个简单但强大的包管理方案。
+  - 包可以通过 `#import "@preview/pkg:1.0.0"` 的方式导入。
+    - *按需自动下载和自动导入第三方包。*
+      - 因此我们不需要像 *TexLive* 一样全量安装吃满硬盘。
+    - 使用 `@preview` 命名空间。
+    - 需要写上版本号，以保证文档源代码可复现性。
+  - 包目前存放于统一的 GitHub Repo 中。#linkto("https://github.com/typst/packages")
+  - 包可以是 *Package* 和 *Template*。
+  - 包也可以存放在本地，并且可以全局导入。
+
+- #Typst 有一个 *Typst Universe*，可以浏览已有包。#linkto("https://typst.app/universe")
+
+
+== WASM 插件
+
+- *WASM* 是一种基于 *Web* 的*跨平台*汇编语言表示。
+
+- #Typst 有 *WASM Plugin* 功能，也就是说：
+  - #Typst 的包并不一定要是纯 Typst 代码。
+  - #Typst 的包基本上可以用任意语言编写，例如 *Rust* 和 *JS*。
+
+- 一些 WASM 包的例子：
+  - *jogs：*封装 *QuickJS*，在 #Typst 中运行 *JavaScript* 代码。
+  - *pyrunner：*在 #Typst 中运行 *Python* 代码。
+  - *tiaoma：*封装 *Zint*，生成条码和二维码。
+  - *diagraph：*在 #Typst 中使用 *Graphviz*。
+
+
+
+= Typst 周边生态开发体验
+
+== 我参与开发的项目
+
+- *Touying：*#Touying 是为 Typst 开发的 Slides 包。#linkto("https://github.com/touying-typ/touying")
+- *MiTeX：*一个 Rust 写的*转译器*，用于快速地渲染 *LaTeX 公式*。#linkto("https://github.com/mitex-rs/mitex")
+- *Pinit：*提供基于*「图钉」（pin）*进行相对定位的能力。#linkto("https://github.com/OrangeX4/typst-pinit")
+- *nju-thesis-typst：*基于 #Typst 的南京大学学位论文。#linkto("https://github.com/nju-lug/nju-thesis-typst")
+- *Chinese-Resume-in-Typst：*美观的 #Typst 中文简历。#linkto("https://github.com/OrangeX4/Chinese-Resume-in-Typst")
+- *Tablem：*在 #Typst 中支持 #Markdown 形式的表格。#linkto("https://github.com/OrangeX4/typst-tablem")
+- *Typst Sympy Calculator：*在 *VS Code* 中做科学符号运算。#linkto("https://github.com/OrangeX4/vscode-typst-sympy-calculator")
+- *Typst Sync：*云端同步本地包的 *VS Code* 插件。#linkto("https://github.com/OrangeX4/vscode-typst-sync")
+
+
+== 开发体验
+
+- #Typst 生态现状：#strike[*勃勃生机，万物竞发*]
+
+- 语法简单，强类型语言，易于开发和调试。
+  - 写起 DSL 也很方便，比如 *MiTeX*、#Touying 和 *Tablem*。
+
+- 还有很多功能可以开发，#strike[例如把 #LaTeX 的宏包全都复刻一遍]。
+
+- *一些例子：*
+  - 国人开发的 *Tinymist* 插件和 *Typst Preview* 插件。
+  - *Pandoc* 支持和 *Quarto* 支持。
+  - 在网页上运行 #Typst：typst.ts 和 typst-book。#linkto("https://myriad-dreamin.github.io/typst-book/")
+  - 在 *VS Code* 的编辑器里显示数学符号的 *Typst Math* 插件。
+
+
+= 最后
+
+== 参考与鸣谢
+
+#slide[
+  #set enum(numbering: "[1]")
+
+  + #Typst 官方文档 #linkto("https://typst.app/docs")
+ 
+  + *现代 #LaTeX 入门讲座* #linkto("https://github.com/stone-zeng/latex-talk")
+
+  + *#Typst 中文教程* #linkto("https://github.com/typst-doc-cn/tutorial")
+
+  + *Typst 非官方中文交流群* 793548390
+
+  + *南京大学 Typst 交流群* 943622984
+]
+
+
+== 关于
+
+#slide[
+  *本幻灯片：*https://github.com/OrangeX4/typst-talk
+  
+  *最后更新：*#datetime.today().display()
+
+  *License：* CC BY-SA 4.0
+
+  *作者：*OrangeX4 #linkto("")
+]
+
+#focus-slide[
+  #set align(center + horizon)
+  \#thank
 ]

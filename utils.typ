@@ -5,6 +5,8 @@
 
 #let Typst = text(fill: typst-color, weight: "bold", "Typst")
 
+#let Touying = text(fill: rgb("#425066"), weight: "bold", "Touying")
+
 #let Markdown = text(fill: rgb(purple), weight: "bold", "Markdown")
 
 #let TeX = {
@@ -28,6 +30,6 @@
 
 // Functions
 
-#let linkto(url) = link(url, box(baseline: 30%, move(dy: -.15em, octique-inline("link"))))
+#let linkto(url, icon: "link") = link(url, box(baseline: 30%, move(dy: -.15em, octique-inline(icon))))
 
 #let keydown(key) = box(stroke: 2pt, inset: .2em, radius: .2em, baseline: .2em, key)
