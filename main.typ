@@ -29,12 +29,12 @@
 #show: init
 
 // global styles
-#set text(font: ("IBM Plex Serif", "Source Han Serif SC"), lang: "zh", region: "cn")
+#set text(font: ("IBM Plex Serif", "Source Han Serif SC", "Noto Serif CJK SC"), lang: "zh", region: "cn")
 #set text(weight: "medium")
 #set par(justify: true)
 #set raw(lang: "typ")
 #set underline(stroke: .05em, offset: .25em)
-#show raw: set text(font: ("IBM Plex Mono", "Source Han Sans SC"))
+#show raw: set text(font: ("IBM Plex Mono", "Source Han Sans SC", "Noto Sans CJK SC"))
 #show raw.where(block: false): box.with(
   fill: luma(240),
   inset: (x: .3em, y: 0em),
@@ -55,7 +55,7 @@
   - #Typst 是为写作而诞生的基于标记的排版系统。#Typst 的目标是成为功能强大的排版工具，并且让用户可以愉快地使用它。#pause
 
 - *简单来说：*
-  - #Typst = #LaTeX 的排版能力 + #Markdown 的简洁语法 + 强大且现代的脚本语言
+  - #Typst = #LaTeX 的排版能力 + #Markdown 的简洁语法 + 强大且现代的脚本语言 #pause
 
 - *运行环境：*Web Wasm / CLI / LSP Language Server
 
@@ -317,11 +317,11 @@
 
 == 数学公式
 
-- `$x$` 是行内公式，`$ x^2 + y^2 = 1 $ <circle>` 是行间公式。
+- `$x$` 是行内公式，`$ x^2 + y^2 = 1 $ <circle>` 是行间公式。#pause
 
 - 与 #LaTeX 的差异：
   - `(x + 1) / x >= 1 => 1/x >= 0`
-  - #raw(lang: "latex", `\frac{x + 1}{x} \ge 1 \Rightarrow \frac{1}{x} \ge 0`.text)
+  - #raw(lang: "latex", `\frac{x + 1}{x} \ge 1 \Rightarrow \frac{1}{x} \ge 0`.text) #pause
 
 - *报告，我想用 LaTeX 语法：*#linkto("https://github.com/mitex-rs/mitex")
 
@@ -481,16 +481,18 @@ Write inline equations like #mi("x") or #mi[y].
 == 制作简历模板
 
 #slide(composer: utils.side-by-side.with(columns: (1fr, auto), gutter: 1em))[
-  - Word / HTML 简历模板？#pause
-    - *不够美观*
+  - Word / HTML 简历模板？
+    - *不够美观* #pause
 
-  - #LaTeX 简历模板？#pause
+  - #LaTeX 简历模板？
     - *环境配置复杂*
-    - *自主定制困难*
+    - *自主定制困难* #pause
   
-  - #Typst 简历模板？#pause
+  - #Typst 简历模板？
     - *绝对优势领域*
     - *Chinese-Resume-in-Typst* #linkto("https://github.com/OrangeX4/Chinese-Resume-in-Typst")
+
+  #meanwhile
 ][
   #set align(center + horizon)
   #show: rect.with(stroke: .5pt)
@@ -567,14 +569,14 @@ Write inline equations like #mi("x") or #mi[y].
 == Touying
 
 - #Touying 是为 Typst 开发的 Slides 包，类似于 #LaTeX 的 Beamer。
-  - 取自中文「*投影*」，而 Beamer 是德语「*投影仪*」的意思。#linkto("https://touying-typ.github.io/touying/zh/")
+  - 取自中文「*投影*」，而 Beamer 是德语「*投影仪*」的意思。#linkto("https://touying-typ.github.io/touying/zh/") #pause
 
 - *基本框架：*
   - 全局单例对象 `s` 保存标题、作者和日期等信息。
   - 使用 `= 节`、`== 小节` 和 `=== 标题` 划分 Slides 结构。
-  - 使用 `#slide[..]` 块来实现更优雅且精细的控制。
+  - 使用 `#slide[..]` 块来实现更优雅且精细的控制。 #pause
 
-- *使用主题：*`#let s = themes.university.register()`
+- *使用主题：*`#let s = themes.university.register()` #pause
 
 - *动画：*
   - `#pause` 和 `#meanwhile` 标记。
@@ -708,11 +710,11 @@ Write inline equations like #mi("x") or #mi[y].
 == 一些常见的 Slides 问题
 
 - *能不能插入 LaTeX 公式？*
-  - 可以，只需要使用 MiTeX 包。#linkto("https://github.com/mitex-rs/mitex")
+  - 可以，只需要使用 MiTeX 包。#linkto("https://github.com/mitex-rs/mitex") #pause
 
 - *能不能够加入 GIF 动图或者视频？*
   - GIF 动图可以，但是要使用 *Typst Preview* 插件的 Slide 模式。
-    - 这是因为 *Typst Preview* 插件是*基于 SVG* 的。
+    - 这是因为 *Typst Preview* 插件是*基于 SVG* 的。 #pause
 
 - *插入图片方便吗？*
   - 方便，比如本讲座的 Slides 就有一堆图片。
@@ -743,7 +745,7 @@ Write inline equations like #mi("x") or #mi[y].
 
 - #Typst 有 *WASM Plugin* 功能，也就是说：
   - #Typst 的包并不一定要是纯 Typst 代码。
-  - #Typst 的包基本上可以用任意语言编写，例如 *Rust* 和 *JS*。
+  - #Typst 的包基本上可以用任意语言编写，例如 *Rust* 和 *JS*。#pause
 
 - 一些 WASM 包的例子：
   - *jogs：*封装 *QuickJS*，在 #Typst 中运行 *JavaScript* 代码。
@@ -769,12 +771,12 @@ Write inline equations like #mi("x") or #mi[y].
 
 == 开发体验
 
-- #Typst 生态现状：#strike[*勃勃生机，万物竞发*]
+- #Typst 生态现状：#strike[*勃勃生机，万物竞发*] #pause
 
 - 语法简单，强类型语言，易于开发和调试。
-  - 写起 DSL 也很方便，比如 *MiTeX*、#Touying 和 *Tablem*。
+  - 写起 DSL 也很方便，比如 *MiTeX*、#Touying 和 *Tablem*。#pause
 
-- 还有很多功能可以开发，#strike[例如把 #LaTeX 的宏包全都复刻一遍]。
+- 还有很多功能可以开发，#strike[例如把 #LaTeX 的宏包全都复刻一遍]。#pause
 
 - *一些例子：*
   - 国人开发的 *Tinymist* 插件和 *Typst Preview* 插件。
@@ -816,5 +818,5 @@ Write inline equations like #mi("x") or #mi[y].
 
 #focus-slide[
   #set align(center + horizon)
-  \#thank
+  \#thanks
 ]
