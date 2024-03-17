@@ -32,8 +32,9 @@
 #set text(font: ("IBM Plex Serif", "Source Han Serif SC"), lang: "zh", region: "cn")
 #set text(weight: "medium")
 #set par(justify: true)
-#show raw: set text(font: ("IBM Plex Mono", "Source Han Sans SC"))
 #set raw(lang: "typ")
+#set underline(stroke: .05em, offset: .25em)
+#show raw: set text(font: ("IBM Plex Mono", "Source Han Sans SC"))
 #show raw.where(block: false): box.with(
   fill: luma(240),
   inset: (x: .3em, y: 0em),
