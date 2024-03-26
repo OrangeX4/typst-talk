@@ -1,4 +1,4 @@
-#import "@preview/touying:0.3.2": *
+#import "@preview/touying:0.3.3": *
 #import "@preview/a2c-nums:0.0.1": int-to-cn-ancient-num
 #import "utils.typ": *
 
@@ -7,11 +7,6 @@
   footer-a: self => self.info.subtitle,
   footer-c: self => h(1fr) + utils.info-date(self) + h(1fr) + states.slide-counter.display(int-to-cn-ancient-num) + h(1fr)
 )
-// 加入空页
-#(s.methods.empty-slide = (self: none, ..args) => {
-  self = utils.empty-page(self)
-  (s.methods.slide)(self: self, ..args)
-})
 #let s = (s.methods.info)(
   self: s,
   title: [并不复杂的 Typst 讲座],
@@ -480,7 +475,7 @@ Write inline equations like #mi("x") or #mi[y].
 
 == 制作简历模板
 
-#slide(composer: utils.side-by-side.with(columns: (1fr, auto), gutter: 1em))[
+#slide(composer: (1fr, auto))[
   - Word / HTML 简历模板？
     - *不够美观* #pause
 
@@ -499,7 +494,7 @@ Write inline equations like #mi("x") or #mi[y].
   #image("images/resume.png")
 ]
 
-#slide(composer: utils.side-by-side.with(columns: (1fr, auto), gutter: 1em))[
+#slide(composer: (1fr, auto))[
   #set text(.5em)
   #show: columns.with(2)
 
@@ -516,7 +511,7 @@ Write inline equations like #mi("x") or #mi[y].
 
 == 南京大学学位论文
 
-#slide(composer: utils.side-by-side.with(columns: (1fr, auto), gutter: 1em))[
+#slide(composer: (1fr, auto))[
   - *nju-thesis-typst* #linkto("https://github.com/nju-lug/nju-thesis-typst")
     - 总共开发时间：*一周*
     - 语法简洁、编译迅速
@@ -583,7 +578,7 @@ Write inline equations like #mi("x") or #mi[y].
   - `#only("2-")[]`、`#uncover("2-")[]` 和 `#alternatives[][]`。
 
 
-#slide(composer: utils.side-by-side.with(columns: (1fr, auto), gutter: 1em))[
+#slide(composer: (1fr, auto))[
   #set text(.5em)
   #show: columns.with(2, gutter: 3em)
 
@@ -807,13 +802,13 @@ Write inline equations like #mi("x") or #mi[y].
 == 关于
 
 #slide[
-  *本幻灯片：*https://github.com/OrangeX4/typst-talk
+  *本幻灯片：*https://github.com/OrangeX4/typst-talk #linkto("https://github.com/OrangeX4/typst-talk")
   
   *最后更新：*#datetime.today().display()
 
   *License：* CC BY-SA 4.0
 
-  *作者：*OrangeX4 #linkto("")
+  *作者：*OrangeX4 #linkto("https://github.com/OrangeX4")
 ]
 
 #focus-slide[
