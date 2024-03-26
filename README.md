@@ -9,6 +9,8 @@
 
 ## PDF 下载
 
+本 PDF 使用 [Touying](https://github.com/touying-typ/touying) 包制作。
+
 - [放映版](https://github.com/OrangeX4/typst-talk/releases/latest/download/typst-talk.pdf)
 - [阅读版](https://github.com/OrangeX4/typst-talk/releases/latest/download/typst-talk-handout.pdf)
 - [Online](https://typst.app/project/rSlkY33tKsw3HxjgpirzXE)
