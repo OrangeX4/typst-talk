@@ -13,7 +13,7 @@
 
 - [放映版](https://github.com/OrangeX4/typst-talk/releases/latest/download/typst-talk.pdf)
 - [阅读版](https://github.com/OrangeX4/typst-talk/releases/latest/download/typst-talk-handout.pdf)
-- [Online](https://typst.app/project/rSlkY33tKsw3HxjgpirzXE)
+- [Online](https://orangex4.github.io/typst-talk/)
 
 ---
 
