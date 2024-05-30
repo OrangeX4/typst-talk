@@ -1,4 +1,4 @@
-#import "@preview/touying:0.3.3": *
+#import "@preview/touying:0.4.2": *
 #import "@preview/a2c-nums:0.0.1": int-to-cn-ancient-num
 #import "utils.typ": *
 
@@ -18,6 +18,8 @@
 #let s = (s.methods.datetime-format)(self: s, "[year] 年 [month] 月 [day] 日")
 // hack for hiding list markers
 #let s = (s.methods.update-cover)(self: s, body => box(scale(x: 0%, body)))
+// numbering
+#let s = (s.methods.numbering)(self: s, "1.")
 // handout mode
 #let s = (s.methods.enable-handout-mode)(self: s)
 #let (init, slides, touying-outline, alert) = utils.methods(s)
