@@ -1,4 +1,4 @@
-#import "@preview/touying:0.5.1": *
+#import "@preview/touying:0.5.2": *
 #import themes.university: *
 #import "@preview/a2c-nums:0.0.1": int-to-cn-ancient-num
 #import "utils.typ": *
@@ -26,7 +26,7 @@
     h(1fr) + utils.display-info-date(self) + h(1fr) + context utils.slide-counter.display(int-to-cn-ancient-num) + h(1fr)
   ),
   config-common(
-    handout: false,
+    handout: true,
     datetime-format: "[year] 年 [month] 月 [day] 日",
   ),
   config-info(
@@ -39,7 +39,7 @@
   ),
   // hack for hiding list markers
   config-methods(cover: (self: none, body) => box(scale(x: 0%, body))),
-  config-page(margin: (top: 2.5em))
+  config-page(margin: (top: 2.4em))
 )
 
 #title-slide()
@@ -764,7 +764,7 @@ Write inline equations like #mi("x") or #mi[y].
 
 
 
-= Typst 周边生态开发体验
+= Typst 生态开发体验
 
 == 我参与开发的项目
 
