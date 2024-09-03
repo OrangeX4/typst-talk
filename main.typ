@@ -26,7 +26,7 @@
     h(1fr) + utils.display-info-date(self) + h(1fr) + context utils.slide-counter.display(int-to-cn-ancient-num) + h(1fr)
   ),
   config-common(
-    handout: true,
+    handout: false,
     nontight-list-enum-and-terms: false,
     datetime-format: "[year] 年 [month] 月 [day] 日",
   ),
