@@ -27,7 +27,6 @@
   ),
   config-common(
     handout: false,
-    nontight-list-enum-and-terms: false,
     datetime-format: "[year] 年 [month] 月 [day] 日",
   ),
   config-info(
@@ -592,7 +591,7 @@ Write inline equations like #mi("x") or #mi[y].
   #show: columns.with(2, gutter: 3em)
 
   ```typ
-  #import "@preview/touying:0.5.1": *
+  #import "@preview/touying:0.5.2": *
   #import themes.aqua: *
 
   #show: aqua-theme.with(
