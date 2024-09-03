@@ -1,32 +1,11 @@
-#import "@preview/touying:0.4.2": *
+#import "@preview/touying:0.5.1": *
+#import themes.university: *
 #import "@preview/a2c-nums:0.0.1": int-to-cn-ancient-num
 #import "utils.typ": *
 
-#let s = themes.university.register(
-  aspect-ratio: "16-9",
-  footer-a: self => self.info.subtitle,
-  footer-c: self => h(1fr) + utils.info-date(self) + h(1fr) + states.slide-counter.display(int-to-cn-ancient-num) + h(1fr)
-)
-#let s = (s.methods.info)(
-  self: s,
-  title: [并不复杂的 Typst 讲座],
-  subtitle: [Typst is Simple],
-  author: [OrangeX4],
-  date: datetime(year: 2024, month: 3, day: 17),
-  institution: [南京大学],
-)
-#let s = (s.methods.datetime-format)(self: s, "[year] 年 [month] 月 [day] 日")
-// hack for hiding list markers
-#let s = (s.methods.update-cover)(self: s, body => box(scale(x: 0%, body)))
-// numbering
-#let s = (s.methods.numbering)(self: s, "1.")
-// handout mode
-#let s = (s.methods.enable-handout-mode)(self: s)
-#let (init, slides, touying-outline, alert) = utils.methods(s)
-#show: init
-
 // global styles
 #set text(font: ("IBM Plex Serif", "Source Han Serif SC", "Noto Serif CJK SC"), lang: "zh", region: "cn")
+#show heading.where(level: 1): set heading(numbering: "1.")
 #set text(weight: "medium")
 #set par(justify: true)
 #set raw(lang: "typ")
@@ -39,10 +18,36 @@
   radius: .2em,
 )
 #show raw.where(block: true): set par(justify: false)
-#show strong: alert
 
-#let (slide, empty-slide, title-slide, focus-slide) = utils.slides(s)
-#show: slides
+#show: university-theme.with(
+  aspect-ratio: "16-9",
+  footer-a: self => self.info.subtitle,
+  footer-c: self => (
+    h(1fr) + utils.display-info-date(self) + h(1fr) + context utils.slide-counter.display(int-to-cn-ancient-num) + h(1fr)
+  ),
+  config-common(
+    handout: true,
+    nontight-list-enum-and-terms: false,
+    datetime-format: "[year] 年 [month] 月 [day] 日",
+  ),
+  config-info(
+    title: [并不复杂的 Typst 讲座],
+    subtitle: [Typst is Simple],
+    author: [OrangeX4],
+    date: datetime(year: 2024, month: 3, day: 17),
+    institution: [南京大学],
+    logo: emoji.school,
+  ),
+  // hack for hiding list markers
+  config-methods(cover: (self: none, body) => box(scale(x: 0%, body))),
+  config-page(margin: (top: 2.5em))
+)
+
+#title-slide()
+
+== 目录 <touying:hidden>
+
+#align(horizon, components.adaptive-columns(outline(title: none, indent: 1em, depth: 1)))
 
 = 介绍
 
@@ -70,11 +75,11 @@
 
 #slide[
   #set text(.5em)
-  
+
   ```typ
   #set page(width: 10cm, height: auto)
   #set heading(numbering: "1.")
-  
+
   = Fibonacci sequence
   The Fibonacci sequence is defined through the recurrence relation $F_n = F_(n-1) + F_(n-2)$.
   It can also be expressed in _closed form:_
@@ -138,20 +143,22 @@
   #let cell(top, bottom) = stack(spacing: .2em, top, block(height: 2em, text(size: .7em, bottom)))
 
   #v(1em)
-  #figure(table(
-    columns: 8,
-    stroke: none,
-    align: center + horizon,
-    inset: .5em,
-    table.hline(stroke: 2pt),
-    [排版系统], [安装难度], [语法难度], [编译速度], [排版能力], [模板能力], [编程能力], [方言数量],
-    table.hline(stroke: 1pt),
-    [LaTeX], cell[#难][选项多 + 体积大 + 流程复杂], cell[#难][语法繁琐 + 嵌套多 + 难调试], cell[#慢][宏语言编译\ 速度极慢], cell[#强][拥有最多的\ 历史积累], cell[#强][拥有众多的\ 模板和开发者], cell[#中][图灵完备\ 但只是宏语言], cell[#中][众多格式、\ 引擎和发行版],
-    [#Markdown], cell[#易][大多编辑器\ 默认支持], cell[#易][入门语法十分简单], cell[#快][语法简单\ 编译速度较快], cell[#弱][基于 HTML排版能力弱], cell[#中][语法简单\ 易于更换模板], cell[#弱][图灵不完备 \ 需要外部脚本], cell[#多][方言众多\ 且难以统一],
-    [Word], cell[#易][默认已安装], cell[#易][所见即所得], cell[#中][能实时编辑\ 大文件会卡顿], cell[#强][大公司开发\ 通用排版软件], cell[#弱][二进制格式\ 难以自动化], cell[#弱][编程能力极弱], cell[#少][统一的标准和文件格式],
-    [#Typst], cell[#易][安装简单\ 开箱即用], cell[#中][入门语法简单\ 进阶使用略难], cell[#快][增量编译渲染\ 速度最快], cell[#较强][已满足日常\ 排版需求], cell[#强][制作和使用\ 模板都较简单], cell[#强][图灵完备\ 现代编程语言], cell[#少][统一的语法\ 统一的编译器],
-    table.hline(stroke: 2pt),
-  ))
+  #figure(
+    table(
+      columns: 8,
+      stroke: none,
+      align: center + horizon,
+      inset: .5em,
+      table.hline(stroke: 2pt),
+      [排版系统], [安装难度], [语法难度], [编译速度], [排版能力], [模板能力], [编程能力], [方言数量],
+      table.hline(stroke: 1pt),
+      [LaTeX], cell[#难][选项多 + 体积大 + 流程复杂], cell[#难][语法繁琐 + 嵌套多 + 难调试], cell[#慢][宏语言编译\ 速度极慢], cell[#强][拥有最多的\ 历史积累], cell[#强][拥有众多的\ 模板和开发者], cell[#中][图灵完备\ 但只是宏语言], cell[#中][众多格式、\ 引擎和发行版],
+      [#Markdown], cell[#易][大多编辑器\ 默认支持], cell[#易][入门语法十分简单], cell[#快][语法简单\ 编译速度较快], cell[#弱][基于 HTML排版能力弱], cell[#中][语法简单\ 易于更换模板], cell[#弱][图灵不完备 \ 需要外部脚本], cell[#多][方言众多\ 且难以统一],
+      [Word], cell[#易][默认已安装], cell[#易][所见即所得], cell[#中][能实时编辑\ 大文件会卡顿], cell[#强][大公司开发\ 通用排版软件], cell[#弱][二进制格式\ 难以自动化], cell[#弱][编程能力极弱], cell[#少][统一的标准和文件格式],
+      [#Typst], cell[#易][安装简单\ 开箱即用], cell[#中][入门语法简单\ 进阶使用略难], cell[#快][增量编译渲染\ 速度最快], cell[#较强][已满足日常\ 排版需求], cell[#强][制作和使用\ 模板都较简单], cell[#强][图灵完备\ 现代编程语言], cell[#少][统一的语法\ 统一的编译器],
+      table.hline(stroke: 2pt),
+    ),
+  )
 ]
 
 #slide[
@@ -249,7 +256,7 @@
 
   - 无序列表
   + 有序列表
-  / 术语: 术语列表 
+  / 术语: 术语列表
 
   ```py
   print('Hello Typst!')
@@ -307,7 +314,7 @@
           set align(center)
           body
         }
-        ```
+        ```,
       )
     - 化简为 `#show heading.where(level: 1): set align(center)`
 
@@ -484,7 +491,7 @@ Write inline equations like #mi("x") or #mi[y].
   - #LaTeX 简历模板？
     - *环境配置复杂*
     - *自主定制困难* #pause
-  
+
   - #Typst 简历模板？
     - *绝对优势领域*
     - *Chinese-Resume-in-Typst* #linkto("https://github.com/OrangeX4/Chinese-Resume-in-Typst")
@@ -585,32 +592,29 @@ Write inline equations like #mi("x") or #mi[y].
   #show: columns.with(2, gutter: 3em)
 
   ```typ
-  #import "@preview/touying:0.3.2": *
+  #import "@preview/touying:0.5.1": *
+  #import themes.aqua: *
 
-  #let s = themes.aqua.register(aspect-ratio: "16-9", lang: "en")
-  #let s = (s.methods.info)(
-    self: s,
-    title: [Title],
-    subtitle: [Subtitle],
-    author: [Authors],
-    date: datetime.today(),
-    institution: [Institution],
+  #show: aqua-theme.with(
+    aspect-ratio: "16-9",
+    config-info(
+      title: [Title],
+      subtitle: [Subtitle],
+      author: [Authors],
+      date: datetime.today(),
+      institution: [Institution],
+    ),
   )
-  #let (init, slides, touying-outline, alert) = utils.methods(s)
-  #show: init
 
-  #show strong: alert
+  #title-slide()
 
-  #let (slide, title-slide, outline-slide, focus-slide) = utils.slides(s)
-  #show: slides
+  #outline-slide()
 
   = The Section
 
   == Slide Title
 
-  #slide[
-    #lorem(40)
-  ]
+  #lorem(40)
 
   #focus-slide[
     Another variant with primary color in background...
@@ -618,15 +622,18 @@ Write inline equations like #mi("x") or #mi[y].
 
   == Summary
 
-  #align(center + horizon)[
-    #set text(size: 3em, weight: "bold", s.colors.primary)
-    THANKS FOR ALL
-  ]
+  #slide(self => [
+    #align(center + horizon)[
+      #set text(size: 3em, weight: "bold", fill: self.colors.primary)
+      THANKS FOR ALL
+    ]
+  ])
+
   ```
 
   #set text(1.2em)
 
-  来源：Touying 文档 #linkto("https://touying-typ.github.io/touying/zh/docs/themes/aqua")
+  来源：Touying 文档 #linkto("https://touying-typ.github.io/zh/docs/themes/aqua")
 ][
   #set align(center + horizon)
   #show: pad.with(right: -1.5em)
@@ -647,7 +654,7 @@ Write inline equations like #mi("x") or #mi[y].
   #show raw.where(block: true): block.with(width: 100%, fill: luma(240), outset: .7em, radius: .2em)
 
   ```typ
-  #import "@preview/pinit:0.1.3": *
+  #import "@preview/pinit:0.2.0": *
   #set text(size: 24pt)
 
   A simple #pin(1)highlighted text#pin(2).
@@ -669,7 +676,11 @@ Write inline equations like #mi("x") or #mi[y].
   #image(height: 115%, "images/pinit-3.png")
   #set text(.8em)
   #place(top + left, dy: -.5em)[使用 #Typst 和 *Pinit* 复刻算法课的 Slides，样式来源于 #linkto("https://chaodong.me/")]
-  #place(top + right, dx: 1.5em, dy: -.5em)[*示例代码* #linkto(icon: "mark-github", "https://touying-typ.github.io/touying/zh/docs/integration/pinit")]
+  #place(
+    top + right,
+    dx: 1.5em,
+    dy: -.5em,
+  )[*示例代码* #linkto(icon: "mark-github", "https://touying-typ.github.io/touying/zh/docs/integration/pinit")]
 ]
 
 
@@ -687,20 +698,22 @@ Write inline equations like #mi("x") or #mi[y].
   #let cell(top, bottom) = stack(spacing: .2em, top, block(height: 2em, text(size: .7em, bottom)))
 
   #v(1em)
-  #figure(table(
-    columns: 8,
-    stroke: none,
-    align: center + horizon,
-    inset: .5em,
-    table.hline(stroke: 2pt),
-    [方案], [语法难度], [编译速度], [排版能力], [模板能力], [编程能力], [动画效果], [代码公式],
-    table.hline(stroke: 1pt),
-    [*PowerPoint*], cell[#易][所见即所得], cell[#快][实时编辑], cell[#强][大公司开发\ 通用软件], cell[#强][模板数量最多\ 容易制作模板], cell[#弱][编程能力极弱\ 难以显示进度], cell[#强][动画效果多\ 但用起来复杂], cell[#难][难以插入代码和公式 #strike[贴图片]],
-    [Beamer], cell[#难][语法繁琐 + 嵌套多 + 难调试], cell[#慢][宏语言编译\ 速度极慢], cell[#弱][使用模板后\ 排版难以修改], cell[#中][拥有较多模板\ 开发模板较难], cell[#中][图灵完备\ 但只是宏语言], cell[#中][简单动画方便\ 无过渡动画], cell[#易][基本默认支持],
-    [#Markdown], cell[#易][入门语法十分简单], cell[#快][语法简单\ 编译速度较快], cell[#弱][语法限制\ 排版能力弱], cell[#弱][难以制作模板\ 只有内置模板], cell[#弱][图灵不完备\ 需要外部脚本], cell[#中][动画效果全看提供了什么], cell[#易][基本默认支持],
-    [#Touying], cell[#易][语法简单\ 使用方便], cell[#快][增量编译渲染\ 速度最快], cell[#中][满足日常学术\ Slides 需求], cell[#强][制作和使用\ 模板都较简单], cell[#强][图灵完备\ 现代编程语言], cell[#中][简单动画方便\ 无过渡动画], cell[#易][默认支持\ MiTeX 包],
-    table.hline(stroke: 2pt),
-  ))
+  #figure(
+    table(
+      columns: 8,
+      stroke: none,
+      align: center + horizon,
+      inset: .5em,
+      table.hline(stroke: 2pt),
+      [方案], [语法难度], [编译速度], [排版能力], [模板能力], [编程能力], [动画效果], [代码公式],
+      table.hline(stroke: 1pt),
+      [*PowerPoint*], cell[#易][所见即所得], cell[#快][实时编辑], cell[#强][大公司开发\ 通用软件], cell[#强][模板数量最多\ 容易制作模板], cell[#弱][编程能力极弱\ 难以显示进度], cell[#强][动画效果多\ 但用起来复杂], cell[#难][难以插入代码和公式 #strike[贴图片]],
+      [Beamer], cell[#难][语法繁琐 + 嵌套多 + 难调试], cell[#慢][宏语言编译\ 速度极慢], cell[#弱][使用模板后\ 排版难以修改], cell[#中][拥有较多模板\ 开发模板较难], cell[#中][图灵完备\ 但只是宏语言], cell[#中][简单动画方便\ 无过渡动画], cell[#易][基本默认支持],
+      [#Markdown], cell[#易][入门语法十分简单], cell[#快][语法简单\ 编译速度较快], cell[#弱][语法限制\ 排版能力弱], cell[#弱][难以制作模板\ 只有内置模板], cell[#弱][图灵不完备\ 需要外部脚本], cell[#中][动画效果全看提供了什么], cell[#易][基本默认支持],
+      [#Touying], cell[#易][语法简单\ 使用方便], cell[#快][增量编译渲染\ 速度最快], cell[#中][满足日常学术\ Slides 需求], cell[#强][制作和使用\ 模板都较简单], cell[#强][图灵完备\ 现代编程语言], cell[#中][简单动画方便\ 无过渡动画], cell[#易][默认支持\ MiTeX 包],
+      table.hline(stroke: 2pt),
+    ),
+  )
 ]
 
 
@@ -790,7 +803,7 @@ Write inline equations like #mi("x") or #mi[y].
   #set enum(numbering: "[1]")
 
   + #Typst 官方文档 #linkto("https://typst.app/docs")
- 
+
   + *现代 #LaTeX 入门讲座* #linkto("https://github.com/stone-zeng/latex-talk")
 
   + *#Typst 中文教程* #linkto("https://github.com/typst-doc-cn/tutorial")
@@ -805,7 +818,7 @@ Write inline equations like #mi("x") or #mi[y].
 
 #slide[
   *本幻灯片：*https://github.com/OrangeX4/typst-talk #linkto("https://github.com/OrangeX4/typst-talk")
-  
+
   *最后更新：*#datetime.today().display()
 
   *License：* CC BY-SA 4.0
