@@ -1,4 +1,4 @@
-#import "@preview/touying:0.5.2": *
+#import "@preview/touying:0.6.1": *
 #import themes.university: *
 #import "@preview/a2c-nums:0.0.1": int-to-cn-ancient-num
 #import "utils.typ": *
@@ -188,7 +188,7 @@
 == 本地使用（推荐）
 
 - *VS Code 方案（推荐）*
-  - 在插件市场安装「Tinymist Typst」和「Typst Preview」插件。
+  - 在插件市场安装「Tinymist Typst」插件。
   - 新建一个 `.typ` 文件，然后按下 #keydown[Ctrl] + #keydown[K] #keydown[V] 即可实时预览。
   - *不再需要其他配置*，例如我们并不需要命令行安装 Typst CLI。#pause
 
@@ -771,7 +771,7 @@ Write inline equations like #mi("x") or #mi[y].
 - *Touying：*#Touying 是为 Typst 开发的 Slides 包。#linkto("https://github.com/touying-typ/touying")
 - *MiTeX：*一个 Rust 写的*转译器*，用于快速地渲染 *LaTeX 公式*。#linkto("https://github.com/mitex-rs/mitex")
 - *Pinit：*提供基于*「图钉」（pin）*进行相对定位的能力。#linkto("https://github.com/OrangeX4/typst-pinit")
-- *nju-thesis-typst：*基于 #Typst 的南京大学学位论文。#linkto("https://github.com/nju-lug/nju-thesis-typst")
+- *modern-nju-thesis：*基于 #Typst 的南京大学学位论文。#linkto("https://github.com/nju-lug/modern-nju-thesis")
 - *Chinese-Resume-in-Typst：*美观的 #Typst 中文简历。#linkto("https://github.com/OrangeX4/Chinese-Resume-in-Typst")
 - *Tablem：*在 #Typst 中支持 #Markdown 形式的表格。#linkto("https://github.com/OrangeX4/typst-tablem")
 - *Typst Sympy Calculator：*在 *VS Code* 中做科学符号运算。#linkto("https://github.com/OrangeX4/vscode-typst-sympy-calculator")
