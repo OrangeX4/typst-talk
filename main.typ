@@ -520,7 +520,7 @@ Write inline equations like #mi("x") or #mi[y].
 == 南京大学学位论文
 
 #slide(composer: (1fr, auto))[
-  - *nju-thesis-typst* #linkto("https://github.com/nju-lug/nju-thesis-typst")
+  - *modern-nju-thesis* #linkto("https://github.com/nju-lug/modern-nju-thesis")
     - 总共开发时间：*一周*
     - 语法简洁、编译迅速
     - 通过*「闭包」*封装保存全局配置
