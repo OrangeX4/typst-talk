@@ -329,7 +329,7 @@
 - *报告，我想用 LaTeX 语法：*#linkto("https://github.com/mitex-rs/mitex")
 
 ```typ
-#import "@preview/mitex:0.2.2": *
+#import "@preview/mitex:0.2.5": *
 
 Write inline equations like #mi("x") or #mi[y].
 #mitex(`
@@ -591,7 +591,7 @@ Write inline equations like #mi("x") or #mi[y].
   #show: columns.with(2, gutter: 3em)
 
   ```typ
-  #import "@preview/touying:0.5.2": *
+  #import "@preview/touying:0.6.1": *
   #import themes.aqua: *
 
   #show: aqua-theme.with(
@@ -653,7 +653,7 @@ Write inline equations like #mi("x") or #mi[y].
   #show raw.where(block: true): block.with(width: 100%, fill: luma(240), outset: .7em, radius: .2em)
 
   ```typ
-  #import "@preview/pinit:0.2.0": *
+  #import "@preview/pinit:0.2.2": *
   #set text(size: 24pt)
 
   A simple #pin(1)highlighted text#pin(2).
