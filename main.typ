@@ -790,7 +790,7 @@ Write inline equations like #mi("x") or #mi[y].
 - *一些例子：*
   - 国人开发的 *Tinymist* 插件。
   - *Pandoc* 支持和 *Quarto* 支持。
-  - 在网页上运行 #Typst：typst.ts 和 typst-book。#linkto("https://myriad-dreamin.github.io/typst-book/")
+  - 在网页上运行 #Typst：typst.ts #linkto("https://myriad-dreamin.github.io/typst.ts/") 和 shiroa。#linkto("https://myriad-dreamin.github.io/shiroa/")
   - 在 *VS Code* 的编辑器里显示数学符号的 *Typst Math* 插件。
 
 
