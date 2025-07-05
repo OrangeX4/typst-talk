@@ -199,7 +199,7 @@
   - Windows: `winget install --id Typst.Typst`
   - macOS: `brew install typst`
   - Linux：查看 Typst on Repology #linkto("https://repology.org/project/typst/versions")
-
+  - rust工具链：`cargo install --locked typst-cli`
 
 = 快速入门
 
@@ -329,7 +329,7 @@
 - *报告，我想用 LaTeX 语法：*#linkto("https://github.com/mitex-rs/mitex")
 
 ```typ
-#import "@preview/mitex:0.2.2": *
+#import "@preview/mitex:0.2.5": *
 
 Write inline equations like #mi("x") or #mi[y].
 #mitex(`
@@ -520,7 +520,7 @@ Write inline equations like #mi("x") or #mi[y].
 == 南京大学学位论文
 
 #slide(composer: (1fr, auto))[
-  - *nju-thesis-typst* #linkto("https://github.com/nju-lug/nju-thesis-typst")
+  - *modern-nju-thesis* #linkto("https://github.com/nju-lug/modern-nju-thesis")
     - 总共开发时间：*一周*
     - 语法简洁、编译迅速
     - 通过*「闭包」*封装保存全局配置
@@ -572,14 +572,29 @@ Write inline equations like #mi("x") or #mi[y].
 == Touying
 
 - #Touying 是为 Typst 开发的 Slides 包，类似于 #LaTeX 的 Beamer。
-  - 取自中文「*投影*」，而 Beamer 是德语「*投影仪*」的意思。#linkto("https://touying-typ.github.io/touying/zh/") #pause
+  - 取自中文「*投影*」，而 Beamer 是德语「*投影仪*」的意思。#linkto("https://touying-typ.github.io/zh/") #pause
 
 - *基本框架：*
   - 全局单例对象 `s` 保存标题、作者和日期等信息。
   - 使用 `= 节`、`== 小节` 和 `=== 标题` 划分 Slides 结构。
   - 使用 `#slide[..]` 块来实现更优雅且精细的控制。 #pause
 
-- *使用主题：*`#let s = themes.university.register()` #pause
+- *使用主题：*
+  ```typ
+  #import "@preview/touying:0.6.1": *
+  #import themes.university: *
+
+  #show: university-theme.with(
+    aspect-ratio: "16-9",
+    config-info(
+      title: [Title],
+      subtitle: [Subtitle],
+      author: [Authors],
+      date: datetime.today(),
+      institution: [Institution],
+    ),
+  )
+  ``` #pause
 
 - *动画：*
   - `#pause` 和 `#meanwhile` 标记。
@@ -591,7 +606,7 @@ Write inline equations like #mi("x") or #mi[y].
   #show: columns.with(2, gutter: 3em)
 
   ```typ
-  #import "@preview/touying:0.5.2": *
+  #import "@preview/touying:0.6.1": *
   #import themes.aqua: *
 
   #show: aqua-theme.with(
@@ -653,7 +668,7 @@ Write inline equations like #mi("x") or #mi[y].
   #show raw.where(block: true): block.with(width: 100%, fill: luma(240), outset: .7em, radius: .2em)
 
   ```typ
-  #import "@preview/pinit:0.2.0": *
+  #import "@preview/pinit:0.2.2": *
   #set text(size: 24pt)
 
   A simple #pin(1)highlighted text#pin(2).
@@ -722,8 +737,8 @@ Write inline equations like #mi("x") or #mi[y].
   - 可以，只需要使用 MiTeX 包。#linkto("https://github.com/mitex-rs/mitex") #pause
 
 - *能不能够加入 GIF 动图或者视频？*
-  - GIF 动图可以，但是要使用 *Typst Preview* 插件的 Slide 模式。
-    - 这是因为 *Typst Preview* 插件是*基于 SVG* 的。 #pause
+  - GIF 动图可以，但是要使用 *Tinymist* 插件的 Slide 模式。
+    - 这是因为 *Tinymist* 插件是*基于 SVG* 的。 #pause
 
 - *插入图片方便吗？*
   - 方便，比如本讲座的 Slides 就有一堆图片。
@@ -788,9 +803,9 @@ Write inline equations like #mi("x") or #mi[y].
 - 还有很多功能可以开发，#strike[例如把 #LaTeX 的宏包全都复刻一遍]。#pause
 
 - *一些例子：*
-  - 国人开发的 *Tinymist* 插件和 *Typst Preview* 插件。
+  - 国人开发的 *Tinymist* 插件。
   - *Pandoc* 支持和 *Quarto* 支持。
-  - 在网页上运行 #Typst：typst.ts 和 typst-book。#linkto("https://myriad-dreamin.github.io/typst-book/")
+  - 在网页上运行 #Typst：typst.ts #linkto("https://myriad-dreamin.github.io/typst.ts/") 和 shiroa。#linkto("https://myriad-dreamin.github.io/shiroa/")
   - 在 *VS Code* 的编辑器里显示数学符号的 *Typst Math* 插件。
 
 
