@@ -722,8 +722,8 @@ Write inline equations like #mi("x") or #mi[y].
   - 可以，只需要使用 MiTeX 包。#linkto("https://github.com/mitex-rs/mitex") #pause
 
 - *能不能够加入 GIF 动图或者视频？*
-  - GIF 动图可以，但是要使用 *Typst Preview* 插件的 Slide 模式。
-    - 这是因为 *Typst Preview* 插件是*基于 SVG* 的。 #pause
+  - GIF 动图可以，但是要使用 *Tinymist* 插件的 Slide 模式。
+    - 这是因为 *Tinymist* 插件是*基于 SVG* 的。 #pause
 
 - *插入图片方便吗？*
   - 方便，比如本讲座的 Slides 就有一堆图片。
@@ -788,7 +788,7 @@ Write inline equations like #mi("x") or #mi[y].
 - 还有很多功能可以开发，#strike[例如把 #LaTeX 的宏包全都复刻一遍]。#pause
 
 - *一些例子：*
-  - 国人开发的 *Tinymist* 插件和 *Typst Preview* 插件。
+  - 国人开发的 *Tinymist* 插件。
   - *Pandoc* 支持和 *Quarto* 支持。
   - 在网页上运行 #Typst：typst.ts 和 typst-book。#linkto("https://myriad-dreamin.github.io/typst-book/")
   - 在 *VS Code* 的编辑器里显示数学符号的 *Typst Math* 插件。
