@@ -199,7 +199,7 @@
   - Windows: `winget install --id Typst.Typst`
   - macOS: `brew install typst`
   - Linux：查看 Typst on Repology #linkto("https://repology.org/project/typst/versions")
-
+  - rust工具链：`cargo install --locked typst-cli`
 
 = 快速入门
 
