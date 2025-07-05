@@ -572,14 +572,29 @@ Write inline equations like #mi("x") or #mi[y].
 == Touying
 
 - #Touying 是为 Typst 开发的 Slides 包，类似于 #LaTeX 的 Beamer。
-  - 取自中文「*投影*」，而 Beamer 是德语「*投影仪*」的意思。#linkto("https://touying-typ.github.io/touying/zh/") #pause
+  - 取自中文「*投影*」，而 Beamer 是德语「*投影仪*」的意思。#linkto("https://touying-typ.github.io/zh/") #pause
 
 - *基本框架：*
   - 全局单例对象 `s` 保存标题、作者和日期等信息。
   - 使用 `= 节`、`== 小节` 和 `=== 标题` 划分 Slides 结构。
   - 使用 `#slide[..]` 块来实现更优雅且精细的控制。 #pause
 
-- *使用主题：*`#let s = themes.university.register()` #pause
+- *使用主题：*
+  ```typ
+  #import "@preview/touying:0.6.1": *
+  #import themes.university: *
+
+  #show: university-theme.with(
+    aspect-ratio: "16-9",
+    config-info(
+      title: [Title],
+      subtitle: [Subtitle],
+      author: [Authors],
+      date: datetime.today(),
+      institution: [Institution],
+    ),
+  )
+  ``` #pause
 
 - *动画：*
   - `#pause` 和 `#meanwhile` 标记。
